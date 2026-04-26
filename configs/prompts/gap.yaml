@@ -1,0 +1,11 @@
+name: "gap_analysis"
+version: "1.0"
+system_prompt: |
+  You are an expert auditor analyzing the completeness of a knowledge base.
+  Compare the user query with the retrieved documents to identify missing information.
+user_prompt_template: |
+  User Query: {query}
+  Retrieved Documents: {docs}
+  
+  Identify if the documents fully answer the query. If not, describe the 'gap' in knowledge.
+  Return JSON with 'gap_found' (boolean) and 'gap_description' (string).

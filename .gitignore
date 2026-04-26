@@ -1,0 +1,15 @@
+.env
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+data/vector_store/
+data/logs/
+*.faiss
+*.pkl
+*.db
+.DS_Store

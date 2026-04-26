@@ -1,0 +1,29 @@
+system:
+  name: "Agentic KB Auditor"
+  version: "0.1.0"
+  env: "development"
+
+kb:
+  chunk_size: 500
+  chunk_overlap: 50
+  embedding_model: "sentence-transformers/all-MiniLM-L6-v2" # Default local model
+  vector_store_type: "faiss"
+
+llm:
+  provider: "sbert"
+  model: "gpt-4-turbo-preview"
+  temperature: 0.1
+
+paths:
+  kb_dir: "data/kb"
+  vector_store_dir: "data/vector_store"
+  logs_dir: "data/logs"
+  artifacts_dir: "artifacts"
+
+logging:
+  level: "INFO"
+  format: "json"
+
+output_mode:
+  chatbot: false
+  dashboard: true

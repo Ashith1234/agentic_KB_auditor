@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentic-kb-auditor"
+version = "0.1.0"
+description = "A production-oriented system for auditing and optimizing AI knowledge bases."
+authors = [
+    { name = "Ashith", email = "ashith@example.com" }
+]
+dependencies = [
+    "langchain",
+    "faiss-cpu",
+    "sentence-transformers",
+    "openai",
+    "pydantic",
+    "pydantic-settings",
+    "pyyaml",
+    "python-dotenv",
+    "loguru",
+    "streamlit"
+]
+requires-python = ">=3.9"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.scripts]
+rag-auditor = "plugin.cli:main"

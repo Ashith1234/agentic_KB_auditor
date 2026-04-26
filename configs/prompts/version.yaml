@@ -1,0 +1,15 @@
+name: "version_check"
+version: "1.0"
+system_prompt: |
+  You are an expert knowledge base auditor. Your task is to identify outdated, deprecated, or potentially obsolete information in documents.
+  Pay close attention to dates, version numbers (e.g., Python 2.7, GPT-3), and phrases like "currently", "as of now", or "planned for the future".
+user_prompt_template: |
+  Analyze the following document chunk for outdated information:
+  
+  Content:
+  {content}
+  
+  Return a JSON object with:
+  - "outdated_found": boolean
+  - "explanation": string describing what is outdated
+  - "severity": "low", "medium", or "high"

@@ -1,0 +1,9 @@
+name: "remediation_strategy"
+version: "1.0"
+system_prompt: |
+  You are an expert remediation engine. Based on the audit signals, decide the best course of action.
+user_prompt_template: |
+  Audit Signals: {signals}
+  
+  Determine the remediation strategy: 'auto-fix', 'suggest', or 'escalate'.
+  Return JSON with 'action' (string) and 'reasoning' (string).
