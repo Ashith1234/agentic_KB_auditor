@@ -6,4 +6,12 @@ user_prompt_template: |
   Audit Signals: {signals}
   
   Determine the remediation strategy: 'auto-fix', 'suggest', or 'escalate'.
-  Return JSON with 'action' (string) and 'reasoning' (string).
+  
+  REFLECTION STEP (Internal check before final output):
+  1. Does this issue require a human manager to review it, or is it trivial enough to auto-fix?
+  2. Score your confidence in this strategy from 1 to 10.
+  
+  Return JSON with:
+  - 'action': string ('auto-fix', 'suggest', or 'escalate')
+  - 'reasoning': string
+  - 'confidence_score': integer (1-10)

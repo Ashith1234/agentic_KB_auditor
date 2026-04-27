@@ -43,8 +43,14 @@ class DuplicateAgent(BaseAgent):
             if not content1 or not content2:
                 continue
 
-            prompt = self.prompt_config["user_prompt_template"].format(doc1=content1, doc2=content2)
-            result = self.llm.evaluate_json(prompt, system_prompt=self.prompt_config["system_prompt"])
+            current_prompt = self.prompt_config["user_prompt_template"].format(doc1=content1, doc2=content2)
+            
+            result = self.analyze_with_reflection(
+                current_prompt=current_prompt,
+                system_prompt=self.prompt_config["system_prompt"],
+                llm_client=self.llm,
+                max_retries=3
+            )
 
             if result.get("contradiction_found"):
                 signal = AuditSignal(

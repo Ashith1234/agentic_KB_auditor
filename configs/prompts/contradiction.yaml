@@ -7,4 +7,13 @@ user_prompt_template: |
   Document 1: {doc1}
   Document 2: {doc2}
   
-  Identify any direct contradictions between these documents. Return your findings in JSON format with a 'contradiction_found' boolean and an 'explanation' string.
+  Identify any direct contradictions between these documents. 
+  
+  REFLECTION STEP (Internal check before final output):
+  1. Are they truly contradicting, or just talking about different contexts/versions?
+  2. Score your confidence in this contradiction from 1 to 10.
+  
+  Return your findings in JSON format with:
+  - 'contradiction_found': boolean
+  - 'explanation': string describing the contradiction
+  - 'confidence_score': integer (1-10)

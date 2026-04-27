@@ -39,8 +39,14 @@ class LearningAgent(BaseAgent):
         # Convert signals to a string representation for the LLM
         signals_text = "\n".join([f"- {s.signal_type}: {s.description} (Severity: {s.severity})" for s in signals])
         
-        prompt = self.prompt_config["user_prompt_template"].format(signals=signals_text)
-        result = self.llm.evaluate_json(prompt, system_prompt=self.prompt_config["system_prompt"])
+        current_prompt = self.prompt_config["user_prompt_template"].format(signals=signals_text)
+        
+        result = self.analyze_with_reflection(
+            current_prompt=current_prompt,
+            system_prompt=self.prompt_config["system_prompt"],
+            llm_client=self.llm,
+            max_retries=3
+        )
 
         action = result.get("action", "suggest")
         reasoning = result.get("reasoning", "Proposed remediation based on audit signals.")

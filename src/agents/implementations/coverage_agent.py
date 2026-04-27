@@ -39,8 +39,14 @@ class CoverageAgent(BaseAgent):
 
         docs_text = "\n---\n".join([c.get("content", "") for c in chunks])
         
-        prompt = self.prompt_config["user_prompt_template"].format(query=query, docs=docs_text)
-        result = self.llm.evaluate_json(prompt, system_prompt=self.prompt_config["system_prompt"])
+        current_prompt = self.prompt_config["user_prompt_template"].format(query=query, docs=docs_text)
+        
+        result = self.analyze_with_reflection(
+            current_prompt=current_prompt,
+            system_prompt=self.prompt_config["system_prompt"],
+            llm_client=self.llm,
+            max_retries=3
+        )
 
         signals = []
         if result.get("gap_found"):

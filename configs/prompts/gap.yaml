@@ -8,4 +8,12 @@ user_prompt_template: |
   Retrieved Documents: {docs}
   
   Identify if the documents fully answer the query. If not, describe the 'gap' in knowledge.
-  Return JSON with 'gap_found' (boolean) and 'gap_description' (string).
+  
+  REFLECTION STEP (Internal check before final output):
+  1. Did the documents *actually* miss the answer, or was it just phrased differently?
+  2. Score your confidence in this gap analysis from 1 to 10.
+  
+  Return JSON with:
+  - 'gap_found': boolean
+  - 'gap_description': string
+  - 'confidence_score': integer (1-10)
