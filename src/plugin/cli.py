@@ -10,6 +10,7 @@ from agents.implementations.supervisor_agent import SupervisorAgent
 from agents.implementations.version_agent import VersionAgent
 from agents.implementations.duplicate_agent import DuplicateAgent
 from agents.implementations.coverage_agent import CoverageAgent
+from agents.implementations.planner_agent import PlannerAgent
 from application.orchestrator.pipeline import AuditPipeline
 from kb.loader import DocumentLoader
 from kb.chunker import DocumentChunker
@@ -19,8 +20,10 @@ def run_manual_audit():
     v_agent = VersionAgent()
     d_agent = DuplicateAgent()
     c_agent = CoverageAgent()
+    planner = PlannerAgent()
     
-    supervisor = SupervisorAgent(agents=[v_agent, d_agent, c_agent])
+    supervisor = SupervisorAgent(agents=[v_agent, d_agent, c_agent], planner=planner)
+
     pipeline = AuditPipeline(supervisor)
     
     logger.info("Loading documents from data/kb...")

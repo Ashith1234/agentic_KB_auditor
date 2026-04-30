@@ -98,23 +98,26 @@ from agents.implementations.version_agent import VersionAgent
 from agents.implementations.duplicate_agent import DuplicateAgent
 from agents.implementations.coverage_agent import CoverageAgent
 from agents.implementations.learning_agent import LearningAgent
+from agents.implementations.planner_agent import PlannerAgent
 from infrastructure.db.review_queue import ReviewQueue
 from kb.loader import DocumentLoader
 from kb.chunker import DocumentChunker
+from interfaces.dashboard.pages import worker, manager
+from interfaces.dashboard import main_hub
 
 # ── System Initialization ──────────────────────────────────────────────────
 @st.cache_resource
 def get_system():
-    # Initialize agents
-    v_agent = VersionAgent()
-    d_agent = DuplicateAgent()
-    c_agent = CoverageAgent()
-    l_agent = LearningAgent()
-    
-    supervisor = SupervisorAgent(agents=[v_agent, d_agent, c_agent])
-    pipeline = AuditPipeline(supervisor)
+    v_agent  = VersionAgent()
+    d_agent  = DuplicateAgent()
+    c_agent  = CoverageAgent()
+    l_agent  = LearningAgent()
+    planner  = PlannerAgent()
+
+    supervisor   = SupervisorAgent(agents=[v_agent, d_agent, c_agent], planner=planner)
+    pipeline     = AuditPipeline(supervisor)
     review_queue = ReviewQueue()
-    
+
     return pipeline, review_queue, l_agent
 
 pipeline, review_queue, l_agent = get_system()
@@ -149,11 +152,23 @@ def health_color(score: float):
 with st.sidebar:
     st.markdown("## 🧠 KB Auditor")
     st.markdown("---")
-    page = st.radio(
-        "Navigation",
-        ["📊 Dashboard", "🤖 Agents", "📜 Logs", "🔄 Versions", "⚙️ Settings"],
-        label_visibility="collapsed",
+
+    st.markdown("**Role**")
+    role = st.selectbox(
+        "Select your role",
+        ["🧑‍💻 Worker", "🧑‍💼 Manager", "📥 Download Hub", "📊 System Monitor"],
+        label_visibility="collapsed"
     )
+
+    if role in ["📊 System Monitor"]:
+        page = st.radio(
+            "Navigation",
+            ["📊 Dashboard", "🤖 Agents", "📜 Logs", "🔄 Versions", "⚙️ Settings"],
+            label_visibility="collapsed",
+        )
+    else:
+        page = None
+
     st.markdown("---")
     st.markdown("**System Status**")
     col_a, col_b = st.columns(2)
@@ -161,6 +176,17 @@ with st.sidebar:
     col_b.markdown('<span class="badge badge-green">● FAISS</span>', unsafe_allow_html=True)
     from datetime import timezone
     st.caption(f"Last sync: {datetime.now(timezone.utc).strftime('%H:%M:%S')} UTC")
+
+# ── Role-based routing ───────────────────────────────────────────────────────
+if role == "🧑‍💻 Worker":
+    worker.main()
+    st.stop()
+elif role == "🧑‍💼 Manager":
+    manager.main()
+    st.stop()
+elif role == "📥 Download Hub":
+    main_hub.main()
+    st.stop()
 
 # ─────────────────────────────────────────────────────────────────────────────
 # PAGE: DASHBOARD

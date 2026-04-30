@@ -5,15 +5,28 @@ from core.logger import logger
 
 class CLIInstaller:
     def install(self, project_path: str):
-        logger.info(f"Scanning project at {project_path}")
+        print(f"\n🔍 Scanning project at: {project_path}")
+        
         detector = ProjectDetector(project_path)
-        scan_results = detector.detect_all()
-        
-        logger.info(f"Scan results: {scan_results}")
-        
+        scan = detector.detect_all()
+
+        print(f"  KB Paths    : {scan.get('kb_paths', [])}")
+        print(f"  Vector DB   : {scan.get('vector_db')}")
+        print(f"  LLM         : {scan.get('llm_usage')}")
+        print(f"  Backend     : {scan.get('backend')}")
+
+        print("\n🔌 Injecting middleware...")
         injector = MiddlewareInjector(project_path)
-        # Wait for manager approval before injecting
-        logger.info("Installation initiated. Waiting for manager approval...")
+        success = injector.inject()
+
+        if success:
+            print("✅ RAG Auditor successfully installed.")
+            print("   Dashboard: streamlit run src/interfaces/dashboard/streamlit_app.py")
+            print("   Run audit: python src/plugin/cli.py audit")
+        else:
+            print("⚠️  Middleware injection failed. Please add manually:")
+            print("   from observability.middleware import AuditingMiddleware")
+            print("   app.add_middleware(AuditingMiddleware, pipeline=pipeline)")
 
 def main():
     if len(sys.argv) > 1 and sys.argv[1] == "install":
