@@ -1,0 +1,5 @@
+source_name,source_url,category,source_type,trust_score,expected_keywords,expected_schema,is_active,created_at,last_updated
+Official API Docs,data/trusted_sources/mock_api_source_1.html,api,official,0.95,API|version|endpoint|latest,"{""version"":""string"",""endpoint"":""string""}",1,2026-01-01,2026-05-20
+Old Internal API PDF,data/trusted_sources/mock_api_source_2.html,api,internal_old,0.60,API|version,"{""version"":""string""}",1,2021-01-01,2021-01-10
+Official Pricing Page,data/trusted_sources/mock_pricing_source_1.html,pricing,official,0.95,price|₹|product,"{""price"":""string"",""currency"":""string""}",1,2026-01-01,2026-05-20
+Old Pricing Brochure,data/trusted_sources/mock_pricing_source_2.html,pricing,internal_old,0.55,price|product,"{""price"":""string""}",1,2023-01-10,2023-01-10

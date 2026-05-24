@@ -22,6 +22,51 @@ class SQLiteRepository(IRepository):
                 )
             ''')
 
+            # ── Trusted sources registry ──────────────────────────────────────
+            conn.execute('''
+                CREATE TABLE IF NOT EXISTS trusted_sources (
+                    id                INTEGER PRIMARY KEY AUTOINCREMENT,
+                    source_name       TEXT    NOT NULL,
+                    source_url        TEXT    NOT NULL UNIQUE,
+                    category          TEXT,
+                    source_type       TEXT,
+                    trust_score       REAL    DEFAULT 0.5,
+                    expected_keywords TEXT,
+                    expected_schema   TEXT,
+                    is_active         INTEGER DEFAULT 1,
+                    created_at        TEXT
+                )
+            ''')
+
+            # ── Scraper monitoring table ──────────────────────────────────────
+            conn.execute('''
+                CREATE TABLE IF NOT EXISTS scraper_monitor (
+                    id                     INTEGER PRIMARY KEY AUTOINCREMENT,
+                    source_url             TEXT    NOT NULL,
+                    source_name            TEXT,
+                    category               TEXT,
+                    http_status_code       INTEGER,
+                    response_time_ms       INTEGER,
+                    last_success_time      TEXT,
+                    last_failure_time      TEXT,
+                    consecutive_failures   INTEGER DEFAULT 0,
+                    error_message          TEXT,
+                    selector_failed        INTEGER DEFAULT 0,
+                    scraper_working        INTEGER DEFAULT 1,
+                    content_length         INTEGER,
+                    content_hash           TEXT,
+                    previous_content_hash  TEXT,
+                    content_change_ratio   REAL    DEFAULT 0.0,
+                    keyword_missing_count  INTEGER DEFAULT 0,
+                    numeric_value_changed  INTEGER DEFAULT 0,
+                    data_changed           INTEGER DEFAULT 0,
+                    schema_valid           INTEGER DEFAULT 1,
+                    needs_manager_review   INTEGER DEFAULT 0,
+                    checked_at             TEXT,
+                    UNIQUE(source_url)
+                )
+            ''')
+
     def save(self, article: Article) -> None:
         with sqlite3.connect(self.db_path) as conn:
             conn.execute(

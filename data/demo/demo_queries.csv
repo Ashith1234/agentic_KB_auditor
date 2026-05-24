@@ -1,0 +1,9 @@
+query,category,expected_issue,expected_resolution
+"Is API v1 still the latest version?",api,OUTDATED,RESOLVED_BY_OFFICIAL_SOURCE
+"What is the product price?",pricing,CONTRADICTION,RESOLVED_BY_OFFICIAL_SOURCE
+"Is Python 2.7 currently supported?",api,OUTDATED,RESOLVED_BY_OFFICIAL_SOURCE
+"Does the system support WhatsApp automation?",api,MISSING_INFO,SOURCE_UNAVAILABLE
+"What is the refund period?",pricing,SAFE,AGREEMENT
+"What is the monthly API call limit?",api,CONTRADICTION,SOURCE_CONFLICT
+"What is the enterprise plan price?",pricing,CONTRADICTION,SOURCE_CONFLICT
+"Is the old brochure pricing still valid?",pricing,OUTDATED,RESOLVED_BY_OFFICIAL_SOURCE

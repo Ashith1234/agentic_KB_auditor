@@ -1,0 +1,9 @@
+text,label
+"Question: Is API v1 latest? Answer: Yes API v1 is latest. Source: API v2 is latest.",1
+"Question: What is refund policy? Answer: Refund available within 7 days. Source: Refund available within 7 days.",0
+"Question: Is Python 2.7 supported? Answer: Yes Python 2.7 is supported. Source: Python 2.7 is end-of-life.",1
+"Question: What is product price? Answer: Product price is ₹999. Source: Product price is ₹1499.",1
+"Question: Does product support email automation? Answer: Yes email automation is supported. Source: Email automation is supported.",0
+"Question: Is API v2 latest? Answer: Yes API v2 is latest. Source: API v2 is latest.",0
+"Question: Does product support WhatsApp automation? Answer: Yes WhatsApp is supported. Source: No information found.",1
+"Question: What is product price? Answer: Product price is ₹1499. Source: Product price is ₹1499.",0
